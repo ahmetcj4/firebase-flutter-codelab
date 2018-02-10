@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1059443118789",
+    "firebase_url": "https://sampleproject-6d91c.firebaseio.com",
+    "project_id": "sampleproject-6d91c",
+    "storage_bucket": "sampleproject-6d91c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059443118789:android:f5b95c0a9a7d8348",
+        "android_client_info": {
+          "package_name": "com.example.coffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059443118789-rvvsmq98hn7pfp5d72s1rpav10ct8pgs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh2Bar1HdWbmXRV2NeLz0v5nttaOYAMiE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

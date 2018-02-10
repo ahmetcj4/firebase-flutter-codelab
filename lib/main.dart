@@ -4,9 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final googleSignIn = new GoogleSignIn();
 final analytics = new FirebaseAnalytics();
+final auth = FirebaseAuth.instance;
 
 final ThemeData kIOSTheme = new ThemeData(
   primarySwatch: Colors.orange,
@@ -15,8 +17,8 @@ final ThemeData kIOSTheme = new ThemeData(
 );
 
 final ThemeData kDefaultTheme = new ThemeData(
-  primarySwatch: Colors.orange,
-  accentColor: Colors.lightBlueAccent,
+  primarySwatch: Colors.purple,
+  accentColor: Colors.orangeAccent[400],
 );
 
 void main() {
@@ -52,8 +54,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _isComposing = false;
     });
-    await _ensureLoggedIn(); //new
-    _sendMessage(text: text); //new
+    await _ensureLoggedIn();
+    _sendMessage(text: text);
   }
 
   void _sendMessage({String text}) {
@@ -68,7 +70,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       _messages.insert(0, message);
     });
     message.animationController.forward();
-    analytics.logEvent(name: 'send_message'); 
+    analytics.logEvent(name: 'send_message');
   }
 
   void _onChanged(String value) {
@@ -161,9 +163,15 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     if (user == null) user = await googleSignIn.signInSilently();
     if (user == null) {
       await googleSignIn.signIn();
-    }
-    if (user != null) {
       analytics.logLogin();
+    }
+    if (await auth.currentUser() == null) {
+      GoogleSignInAuthentication credentials =
+          await googleSignIn.currentUser.authentication;
+      await auth.signInWithGoogle(
+        idToken: credentials.idToken,
+        accessToken: credentials.accessToken,
+      );
     }
   }
 }

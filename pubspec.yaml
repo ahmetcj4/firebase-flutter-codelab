@@ -4,7 +4,6 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
-
   image_picker: 0.1.1                                             
   google_sign_in: 0.3.1                                           
   firebase_analytics: 0.0.4                                       

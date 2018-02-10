@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
-const String _name = "Ahmet Zorer";
+import 'dart:async';
+import 'package:google_sign_in/google_sign_in.dart';
+ 
+final googleSignIn = new GoogleSignIn();
 
 final ThemeData kIOSTheme = new ThemeData(
   primarySwatch: Colors.orange,
@@ -42,8 +44,17 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
 
-  void _handleSubmitted(String text) {
+  Future<Null> _handleSubmitted(String text) async {
+    //modified
     _textController.clear();
+    setState(() {
+      _isComposing = false;
+    });
+    await _ensureLoggedIn(); //new
+    _sendMessage(text: text); //new
+  }
+
+  void _sendMessage({String text}) {
     ChatMessage message = new ChatMessage(
       text: text,
       animationController: new AnimationController(
@@ -52,7 +63,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       ),
     );
     setState(() {
-      _isComposing = false;
       _messages.insert(0, message);
     });
     message.animationController.forward();
@@ -142,6 +152,14 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               : null),
     );
   }
+
+  Future<Null> _ensureLoggedIn() async {
+    GoogleSignInAccount user = googleSignIn.currentUser;
+    if (user == null) user = await googleSignIn.signInSilently();
+    if (user == null) {
+      await googleSignIn.signIn();
+    }
+  }
 }
 
 class ChatMessage extends StatelessWidget {
@@ -161,13 +179,17 @@ class ChatMessage extends StatelessWidget {
           children: <Widget>[
             new Container(
               margin: const EdgeInsets.only(right: 16.0),
-              child: new CircleAvatar(child: new Text(getInitials(_name))),
+              child: new CircleAvatar(
+                backgroundImage:
+                    new NetworkImage(googleSignIn.currentUser.photoUrl),
+              ),
             ),
             new Expanded(
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Text(_name, style: Theme.of(context).textTheme.subhead),
+                  new Text(googleSignIn.currentUser.displayName,
+                      style: Theme.of(context).textTheme.subhead),
                   new Container(
                     margin: const EdgeInsets.only(top: 5.0),
                     child: new Text(text),

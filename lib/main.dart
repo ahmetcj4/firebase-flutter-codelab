@@ -222,11 +222,9 @@ class ChatMessage extends StatelessWidget {
                   new Container(
                     margin: const EdgeInsets.only(top: 5.0),
                     child: snapshot.value['imageUrl'] != null
-                        ? new Container(
-                            child: new Image.network(
-                              snapshot.value['imageUrl'],
-                              width: 250.0,
-                            ),
+                        ? new Image.network(
+                            snapshot.value['imageUrl'],
+                            width: 250.0,
                           )
                         : new Text(snapshot.value['text']),
                   ),

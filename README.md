@@ -38,8 +38,12 @@ $ git clone https://github.com/ahmetcj4/firebase-flutter-codelab.git
 # Go to project dir
 $ cd firebase-flutter-codelab/
 
-# Build and run the project
+# Build and run the project (app is Slow, for development and debugging)
 $ flutter run
+
+# Or faster one
+$ flutter build apk
+$ flutter install
 
 # Enjoy!
 ```

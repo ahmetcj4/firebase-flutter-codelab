@@ -52,6 +52,7 @@ $ flutter install
 - [Flutter](http://flutter.io/)
 - [Codelab Part 1 - Building Beautiful UIs with Flutter](https://codelabs.developers.google.com/codelabs/flutter/index.html)
 - [Codelab Part 2 - Firebase for Flutter](https://codelabs.developers.google.com/codelabs/flutter-firebase/index.html)
+- [Bonus - Awesome video by Bram Vanbilsen Flutter Dev with Visual Studio Code](https://youtu.be/hhP1tE-IHos)
 
 ---
 
